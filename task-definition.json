@@ -1,0 +1,110 @@
+{
+    "containerDefinitions": [
+      { 
+        "essential": true,
+        "name": "travel-plan-api",
+        "image": "",
+        "portMappings": [ 
+           { 
+              "containerPort": 8001,
+              "hostPort": 8001,
+              "protocol": "tcp"
+           }
+        ],
+       "mountPoints": [
+         {
+           "containerPath": "/log",
+           "sourceVolume": "efs-volume"
+         }
+       ],
+       "logConfiguration":{
+         "logDriver":"awslogs",
+         "options":{
+           "awslogs-group":"ecs/travel-app-log-grp-main-app",
+           "awslogs-region":"us-east-1",
+           "awslogs-stream-prefix":"travel-plan-api-main"
+         }
+       }
+     },
+     {
+      "essential": true,
+      "name": "mongo",
+      "image": "docker.io/mongo:4.0",
+      "portMappings": [
+        {
+          "containerPort": 27017,
+          "hostPort": 27017,
+          "protocol": "tcp"
+        }
+      ],
+      "command": [
+        "--smallfiles"
+      ],
+      "mountPoints": [
+        {
+          "containerPath": "/data/db",
+          "sourceVolume": "efs-volume"
+        }
+      ],
+      "logConfiguration":{
+        "logDriver":"awslogs",
+        "options":{
+          "awslogs-group":"ecs/travel-app-log-grp-main-app",
+          "awslogs-region":"us-east-1",
+          "awslogs-stream-prefix":"mongo"
+        }
+      }
+    },
+    {
+      "command": [
+        "redis-server"
+      ],
+      "essential": true,
+      "image": "docker.io/redis:5.0.5",
+      "mountPoints": [
+        {
+          "containerPath": "/data",
+          "sourceVolume": "efs-volume"
+        },
+        {
+          "containerPath": "/logs",
+          "sourceVolume": "efs-volume"
+        }
+      ],
+      "name": "redis",
+      "portMappings": [
+        {
+          "containerPort": 6379,
+          "hostPort": 6379
+        }
+      ],
+      "logConfiguration":{
+        "logDriver":"awslogs",
+        "options":{
+          "awslogs-group":"ecs/travel-app-log-grp-main-app",
+          "awslogs-region":"us-east-1",
+          "awslogs-stream-prefix":"redis"
+        }
+      }
+    }
+
+    ],
+
+    "cpu": "256",
+    "executionRoleArn": "arn:aws:iam::356567610291:role/ecsTaskExecutionRole",
+    "family": "f-task-def-travel-plan-api",
+    "memory": "512",
+    "networkMode": "awsvpc",
+    "requiresCompatibilities": [ 
+        "FARGATE" 
+     ],
+    "volumes": [
+      {
+        "name": "efs-volume",
+        "efsVolumeConfiguration": {
+          "fileSystemId": "fs-c2633f40",
+          "transitEncryption": "ENABLED"
+        }
+      }
+    ]
+ }
