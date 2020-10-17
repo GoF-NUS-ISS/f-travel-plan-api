@@ -40,7 +40,7 @@ spring:
 eureka:
   client: #client register into eureka
     service-url: 
-      defaultZone: http://localhost:7001/eureka/
+      defaultZone: http://eureka.local:7001/eureka/
   instance:
     instance-id: microservicecloud-travel-plan8001-hystrix
     prefer-ip-address: true
