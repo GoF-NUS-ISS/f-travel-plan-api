@@ -25,68 +25,7 @@
            "awslogs-stream-prefix":"travel-plan-api-main"
          }
        }
-     },
-     {
-      "essential": true,
-      "name": "mongo",
-      "image": "docker.io/mongo:4.0",
-      "portMappings": [
-        {
-          "containerPort": 27017,
-          "hostPort": 27017,
-          "protocol": "tcp"
-        }
-      ],
-      "command": [
-        "--smallfiles"
-      ],
-      "mountPoints": [
-        {
-          "containerPath": "/data/db",
-          "sourceVolume": "efs-volume"
-        }
-      ],
-      "logConfiguration":{
-        "logDriver":"awslogs",
-        "options":{
-          "awslogs-group":"ecs/travel-app-log-grp-main-app",
-          "awslogs-region":"us-east-1",
-          "awslogs-stream-prefix":"mongo"
-        }
-      }
-    },
-    {
-      "command": [
-        "redis-server"
-      ],
-      "essential": true,
-      "image": "docker.io/redis:5.0.5",
-      "mountPoints": [
-        {
-          "containerPath": "/data",
-          "sourceVolume": "efs-volume"
-        },
-        {
-          "containerPath": "/logs",
-          "sourceVolume": "efs-volume"
-        }
-      ],
-      "name": "redis",
-      "portMappings": [
-        {
-          "containerPort": 6379,
-          "hostPort": 6379
-        }
-      ],
-      "logConfiguration":{
-        "logDriver":"awslogs",
-        "options":{
-          "awslogs-group":"ecs/travel-app-log-grp-main-app",
-          "awslogs-region":"us-east-1",
-          "awslogs-stream-prefix":"redis"
-        }
-      }
-    }
+     }
 
     ],
 
