@@ -14,11 +14,11 @@ spring:
     name: microservicecloud-travel-plan
    data: 
     mongodb: 
-      uri: mongodb://localhost:27017
+      uri: mongodb://mongo.local:27017
       database: travelplan
    redis:
       database: 0
-      host: localhost
+      host: redis.local
       port: 6379
       password: 
       timeout: 10000
