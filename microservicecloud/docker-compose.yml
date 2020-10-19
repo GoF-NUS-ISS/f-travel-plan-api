@@ -3,7 +3,7 @@ services:
   travel-plan-api:
     build: ./microservicecloud-provider-dept-hystrix-8001
     image: travel-plan-api
-    container_name: travel-plan-api
+    container_name: travel-plan-api.local
     ports:
       - "8001:8001"
     volumes:
