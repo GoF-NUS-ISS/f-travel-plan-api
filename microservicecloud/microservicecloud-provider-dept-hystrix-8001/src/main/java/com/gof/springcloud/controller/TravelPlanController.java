@@ -34,6 +34,12 @@ public class TravelPlanController
 		return AjaxResponse.success(service.addPlan(travelPlan));
 	}
 
+	@PostMapping("/travelPlanBuilder")
+	@ApiOperation(value = "Add a travelPlan from builder", notes = "Add a travelPlan from builder")
+	public String addPlanBuilder(@RequestBody TravelPlanModel travelPlan){
+		return service.addPlanBuilder(travelPlan);
+	}
+
 	@GetMapping("/travelPlan/id/{id}")
 	@ApiOperation(value = "Get travelPlan by id", notes = "Get travelPlan by id")
 	public TravelPlanModel getById(@PathVariable String id){

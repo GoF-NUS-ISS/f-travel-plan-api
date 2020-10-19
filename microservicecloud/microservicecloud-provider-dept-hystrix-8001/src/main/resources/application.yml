@@ -10,18 +10,20 @@ logging:
   file:
     name: ./log/travel-plan-api.log
 spring:
-   application:
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfigurationdo
+  application:
     name: microservicecloud-travel-plan
-   data: 
-    mongodb: 
+  data:
+    mongodb:
       uri: mongodb://mongo.local:27017
       database: travelplan
-   redis:
-      database: 0
-      host: redis.local
-      port: 6379
-      password: 
-      timeout: 10000
+  redis:
+    database: 0
+    host: redis.local
+    port: 6379
+    password:
+    timeout: 10000
       
 eureka:
   client: #client register into eureka

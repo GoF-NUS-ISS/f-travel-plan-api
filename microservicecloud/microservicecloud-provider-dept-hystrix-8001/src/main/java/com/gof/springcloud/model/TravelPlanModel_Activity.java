@@ -7,8 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.text.DecimalFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -33,8 +32,8 @@ public class TravelPlanModel_Activity extends TravelPlanModel_DayNode {
     public String location;
 
     @ApiModelProperty(value = "time start")
-    public Date timeStart;
+    public LocalDateTime timeStart;
 
     @ApiModelProperty(value = "time end")
-    public Date timeEnd;
+    public LocalDateTime timeEnd;
 }

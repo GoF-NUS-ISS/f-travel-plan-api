@@ -3,6 +3,8 @@ package com.gof.springcloud.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,20 +36,21 @@ public class TravelPlanServiceImpl implements TravelPlanService {
 		event.setModel(travelPlanModel);
 		event.setOptTime(new Date());
 		event.setOptType("SAVE");
-		//try {
-			// transfer into json
-			ObjectMapper objectMapper = new ObjectMapper();
-			String eventJsonStr = objectMapper.writeValueAsString(event);
-			eventJsonProducer.send(Topics.PLAN_EVENT_JSON, eventJsonStr);
-			log.info("pulsar produce plan json: {}", eventJsonStr);
-		//} catch (JsonProcessingException e) {
-		//	log.error("pulsar produce plan fail:{} JsonProcessingException - reason:{}", event.toString(), e);
-	    //    throw new IllegalArgumentException("Divider must not be 0");
 
-		//} catch (PulsarClientException e) {
-		//	log.error("pulsar produce plan fail:{} PulsarClientException - reason:{}", event.toString(), e);
-		//}
+		// transfer into json
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.registerModule(new JavaTimeModule());
+		objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+		String eventJsonStr = objectMapper.writeValueAsString(event);
+		eventJsonProducer.send(Topics.PLAN_EVENT_JSON, eventJsonStr);
+		log.info("pulsar produce plan json: {}", eventJsonStr);
+
 		return travelPlanModel;
+	}
+
+	@Override
+	public String addPlanBuilder(TravelPlanModel travelPlanModel){
+		return travelPlanRepository.save(travelPlanModel).getId();
 	}
 
 	@Override

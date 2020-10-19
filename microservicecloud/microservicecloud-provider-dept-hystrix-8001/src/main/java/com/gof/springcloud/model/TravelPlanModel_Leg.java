@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -23,10 +23,10 @@ public class TravelPlanModel_Leg extends TravelPlanModel_DayNode {
     private String to;
 
     @ApiModelProperty(value = "start on")
-    public Date startOn;
+    public LocalDateTime startOn;
 
     @ApiModelProperty(value = "return date")
-    public Date returnDate;
+    public LocalDateTime stopAt;
 
     @ApiModelProperty(value = "transport mode")
     public String transportMode;
