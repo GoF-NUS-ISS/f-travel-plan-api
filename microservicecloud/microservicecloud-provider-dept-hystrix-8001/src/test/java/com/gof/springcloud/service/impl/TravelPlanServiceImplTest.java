@@ -61,6 +61,18 @@ public class TravelPlanServiceImplTest {
 		Assert.assertEquals(plan1, planService.addPlan(plan));
 	}
 
+	@Test
+	public void testAddPlanBuilder() {
+		TravelPlanModel plan = new TravelPlanModel();
+		plan.setId("test");
+		// Mock MongoDB
+		when(travelPlanRepository.save(plan)).thenReturn(plan);
+		// Compare result
+		TravelPlanModel plan1 = new TravelPlanModel();
+		plan1.setId("test");
+		Assert.assertEquals(plan1.getId(), planService.addPlanBuilder(plan));
+	}
+
 
 	@Test(expected = JsonProcessingException.class)
 	public void testAddPlanJsonProcessingException() throws JsonProcessingException {

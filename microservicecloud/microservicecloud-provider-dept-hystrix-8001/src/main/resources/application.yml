@@ -11,7 +11,7 @@ logging:
     name: ./log/travel-plan-api.log
 spring:
   autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfigurationdo
   application:
     name: microservicecloud-travel-plan
   data:
