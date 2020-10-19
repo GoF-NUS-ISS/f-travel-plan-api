@@ -1,0 +1,15 @@
+version: "3"
+services:
+  travel-plan-api:
+    build: ./microservicecloud-provider-dept-hystrix-8001
+    image: travel-plan-api
+    container_name: travel-plan-api
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./log:/log
+
+networks:
+  default:
+    external:
+      name: test-dev-shared-network
