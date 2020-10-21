@@ -1,7 +1,11 @@
 package com.gof.springcloud.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
+import com.gof.springcloud.request.TravelPlanRequestMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +34,8 @@ public class TravelPlanController
 
 	@PostMapping("/travelPlan")
 	@ApiOperation(value = "Add a travelPlan", notes = "Add a travelPlan")
-	public AjaxResponse addPlan(@RequestBody TravelPlanModel travelPlan){
-		return AjaxResponse.success(service.addPlan(travelPlan));
+	public AjaxResponse addPlan(@RequestBody TravelPlanRequestMain travelPlanRequestMain){
+		return AjaxResponse.success(service.addPlan(Mapper.RequestToModel(travelPlanRequestMain)));
 	}
 
 	@PostMapping("/travelPlanBuilder")
@@ -42,16 +46,20 @@ public class TravelPlanController
 
 	@GetMapping("/travelPlan/id/{id}")
 	@ApiOperation(value = "Get travelPlan by id", notes = "Get travelPlan by id")
-	public TravelPlanModel getById(@PathVariable String id){
-		return service.getById(id);
+	public TravelPlanRequestMain getById(@PathVariable String id){
+		return Mapper.ModelToRequest(service.getById(id));
 	}
 
 	@GetMapping("/travelPlan/name/{name}")
 	@ApiOperation(value = "Get travelPlan by name", notes = "Get travelPlan by name")
 	//@ApiImplicitParam(paramType = "name", required = true, defaultValue = "tim")
 	@Cacheable(value = "travelPlanByName", key = "#name", unless = "#result == null || #result.size() == 0")
-	public List<TravelPlanModel> getByName(@PathVariable String name){
-		return service.getByName(name);
+	public List<TravelPlanRequestMain> getByName(@PathVariable String name){
+		return service
+				.getByName(name)
+				.stream()
+				.map(Mapper::ModelToRequest).
+						collect(Collectors.toList());
 	}
 
 
