@@ -1,14 +1,12 @@
 package com.gof.springcloud.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.gof.springcloud.request.TravelPlanRequestMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gof.springcloud.entities.interaction.AjaxResponse;
 import com.gof.springcloud.model.TravelPlanModel;
+import com.gof.springcloud.request.TravelPlanRequestMain;
 import com.gof.springcloud.service.TravelPlanService;
 
 import io.swagger.annotations.Api;
@@ -39,6 +38,7 @@ public class TravelPlanController
 	}
 
 	@PostMapping("/travelPlanBuilder")
+    @CacheEvict(value = "travelPlanByName", key = "#travelPlan.name")
 	@ApiOperation(value = "Add a travelPlan from builder", notes = "Add a travelPlan from builder")
 	public String addPlanBuilder(@RequestBody TravelPlanModel travelPlan){
 		return service.addPlanBuilder(travelPlan);
