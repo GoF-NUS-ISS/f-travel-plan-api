@@ -33,13 +33,14 @@ public class TravelPlanController
 
 	@PostMapping("/travelPlan")
 	@ApiOperation(value = "Add a travelPlan", notes = "Add a travelPlan")
+    @CacheEvict(value = "travelPlanByName", key = "#travelPlanRequestMain.name")
 	public AjaxResponse addPlan(@RequestBody TravelPlanRequestMain travelPlanRequestMain){
 		return AjaxResponse.success(service.addPlan(Mapper.RequestToModel(travelPlanRequestMain)));
 	}
 
 	@PostMapping("/travelPlanBuilder")
-    @CacheEvict(value = "travelPlanByName", key = "#travelPlan.name")
 	@ApiOperation(value = "Add a travelPlan from builder", notes = "Add a travelPlan from builder")
+	@CacheEvict(value = "travelPlanByName", key = "#travelPlan.name")
 	public String addPlanBuilder(@RequestBody TravelPlanModel travelPlan){
 		return service.addPlanBuilder(travelPlan);
 	}
