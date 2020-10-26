@@ -25,13 +25,13 @@ spring:
     password:
     timeout: 10000
       
-eureka:
-  client: #client register into eureka
-    service-url: 
-      defaultZone: http://eureka.local:7001/eureka/
-  instance:
-    instance-id: microservicecloud-travel-plan8001-hystrix
-    prefer-ip-address: true
+#eureka:
+#  client: #client register into eureka
+#    service-url:
+#      defaultZone: http://eureka.local:7001/eureka/
+#  instance:
+#    instance-id: microservicecloud-travel-plan8001-hystrix
+#    prefer-ip-address: true
       
 info:
   app.name: gof-microservicecloud
